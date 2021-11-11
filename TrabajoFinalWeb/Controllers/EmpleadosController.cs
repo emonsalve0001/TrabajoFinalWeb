@@ -77,7 +77,7 @@ namespace TrabajoFinalWeb.Controllers
             if (ModelState.IsValid)
             {
                 empleado.Sueldo = 0;
-                empleado.IdTipoEmpleado = 5;
+                empleado.IdTipoEmpleado = 2;
                 db.Empleadoes.Add(empleado);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");

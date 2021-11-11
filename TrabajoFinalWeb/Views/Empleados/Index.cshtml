@@ -6,8 +6,9 @@
 }
 
 <body class="subpage">
-    <h2>Lista de Empleados</h2>
-
+    <hr />
+    <h2>Usuarios</h2>
+    <hr />
     <p>
         @Html.ActionLink("Registrar Nuevo Empleado", "Registrar_Personal")
     </p>
@@ -30,9 +31,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TipoEmpleado.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoEmpleado.Sueldo)
             </th>
             <th>
                 Opciones
@@ -60,13 +58,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.TipoEmpleado.Descripcion)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TipoEmpleado.Sueldo)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                <td style="width: 100%">
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
                     @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+
+                    @Html.ActionLink("Editar", "Edit", null, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Detalle", "Details", null, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Eliminar", "Delete", null, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }

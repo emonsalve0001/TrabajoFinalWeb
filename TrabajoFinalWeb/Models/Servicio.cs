@@ -12,21 +12,20 @@ namespace TrabajoFinalWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ModoDePago
+    public partial class Servicio
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ModoDePago()
+        public Servicio()
         {
-            this.DetalleBoletas = new HashSet<DetalleBoleta>();
-            this.DBS = new HashSet<DB>();
+            this.Empleados_Servicios = new HashSet<Empleados_Servicios>();
         }
     
         public int ID { get; set; }
+        public string Nombre { get; set; }
+        public decimal Precio { get; set; }
         public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleBoleta> DetalleBoletas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DB> DBS { get; set; }
+        public virtual ICollection<Empleados_Servicios> Empleados_Servicios { get; set; }
     }
 }

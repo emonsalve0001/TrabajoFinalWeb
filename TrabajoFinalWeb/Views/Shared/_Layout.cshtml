@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - AirShop</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
@@ -24,7 +24,7 @@
 <body>
     <!-- Header -->
     <header id="header">
-        <div class="logo"><a href="~/">AIR <span> SHOP </span></a></div>
+        <div class="logo"><a href="~/">AirShop</a></div>
         <a href="#menu">Menu</a>
     </header>
 
@@ -39,8 +39,8 @@
             <li><a>@Html.ActionLink("Ingresar", "Login", "Empleados")</a></li>
                     }
                 }
-            <li><a>@Html.ActionLink("Carrito de compras", "Orden", "Productos_Pedidos")</a></li>
-            <li><a>@Html.ActionLink("Sobre Nosotros", "About", "Home")</a></li>
+            <li><a>@Html.ActionLink("Productos", "Orden", "Productos_Pedidos")</a></li>
+            <li><a>@Html.ActionLink("Servicios", "About", "Home")</a></li>
             <li><a>@Html.ActionLink("Contactenos", "Contact", "Home")</a></li>
             @{
                 if (Session.Count != 0) {

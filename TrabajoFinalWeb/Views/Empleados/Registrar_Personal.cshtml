@@ -8,7 +8,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h2>Registrar Personal</h2>
+            <br />
+            <h2>Registrar Usuarios</h2>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
@@ -75,6 +76,6 @@
     }
 
     <div>
-        @Html.ActionLink("Regresar al inicio", "Index_Administrador")
+        @Html.ActionLink("Regresar al inicio", "../Home/Index_Administrador")
     </div>
 </body>

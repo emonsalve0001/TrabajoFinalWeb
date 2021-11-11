@@ -12,14 +12,12 @@ namespace TrabajoFinalWeb.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DetalleBoleta
+    public partial class sysdiagram
     {
-        public int ID { get; set; }
-        public int IdPedido { get; set; }
-        public decimal MontoTotal { get; set; }
-        public int IdModoDePago { get; set; }
-    
-        public virtual ModoDePago ModoDePago { get; set; }
-        public virtual Pedido Pedido { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

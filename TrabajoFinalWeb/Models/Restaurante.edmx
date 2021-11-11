@@ -36,6 +36,15 @@
           <Property Name="Direccion" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Sueldo" Type="money" Nullable="false" />
         </EntityType>
+        <EntityType Name="Empleados_Servicios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpleado" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdServicio" Type="int" Nullable="false" />
+          <Property Name="Observacion" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="ModoDePago">
           <Key>
             <PropertyRef Name="ID" />
@@ -88,6 +97,25 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Atendido" Type="bit" />
           <Property Name="Detalle" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Servicio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="TipoEmpleado">
           <Key>
@@ -164,6 +192,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Empleados_Servicios">
+          <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
+          <End Role="Empleados_Servicios" Type="Self.Empleados_Servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Empleados_Servicios">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Pedido_Pedido">
           <End Role="Empleado" Type="Self.Empleado" Multiplicity="1" />
           <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
@@ -236,18 +276,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Servicios_Servicios">
+          <End Role="Servicio" Type="Self.Servicio" Multiplicity="1" />
+          <End Role="Empleados_Servicios" Type="Self.Empleados_Servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Empleados_Servicios">
+              <PropertyRef Name="IdServicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="eliminar" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="eliminarTodo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="RestauranteModelStoreContainer">
           <EntitySet Name="DBS" EntityType="Self.DBS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleBoleta" EntityType="Self.DetalleBoleta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Empleado" EntityType="Self.Empleado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empleados_Servicios" EntityType="Self.Empleados_Servicios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ModoDePago" EntityType="Self.ModoDePago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PPS" EntityType="Self.PPS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Productos_Pedidos" EntityType="Self.Productos_Pedidos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PS" EntityType="Self.PS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Servicio" EntityType="Self.Servicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoEmpleado" EntityType="Self.TipoEmpleado" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoProducto" EntityType="Self.TipoProducto" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_DBS_ModoDePago" Association="Self.FK_DBS_ModoDePago">
@@ -269,6 +324,10 @@
           <AssociationSet Name="FK_Empleado_TipoEmpleado" Association="Self.FK_Empleado_TipoEmpleado">
             <End Role="TipoEmpleado" EntitySet="TipoEmpleado" />
             <End Role="Empleado" EntitySet="Empleado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empleados_Servicios" Association="Self.FK_Empleados_Servicios">
+            <End Role="Empleado" EntitySet="Empleado" />
+            <End Role="Empleados_Servicios" EntitySet="Empleados_Servicios" />
           </AssociationSet>
           <AssociationSet Name="FK_Pedido_Pedido" Association="Self.FK_Pedido_Pedido">
             <End Role="Empleado" EntitySet="Empleado" />
@@ -293,6 +352,10 @@
           <AssociationSet Name="FK_Productos_Pedidos_Producto" Association="Self.FK_Productos_Pedidos_Producto">
             <End Role="Producto" EntitySet="Producto" />
             <End Role="Productos_Pedidos" EntitySet="Productos_Pedidos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Servicios_Servicios" Association="Self.FK_Servicios_Servicios">
+            <End Role="Servicio" EntitySet="Servicio" />
+            <End Role="Empleados_Servicios" EntitySet="Empleados_Servicios" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -324,6 +387,7 @@
           <Property Name="Sueldo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="TipoEmpleado" Relationship="Self.FK_Empleado_TipoEmpleado" FromRole="Empleado" ToRole="TipoEmpleado" />
           <NavigationProperty Name="Pedidoes" Relationship="RestauranteModel.FK_Pedido_Pedido" FromRole="Empleado" ToRole="Pedido" />
+          <NavigationProperty Name="Empleados_Servicios" Relationship="RestauranteModel.FK_Empleados_Servicios" FromRole="Empleado" ToRole="Empleados_Servicios" />
         </EntityType>
         <EntityType Name="ModoDePago">
           <Key>
@@ -444,6 +508,17 @@
             <End Role="Productos_Pedidos" EntitySet="Productos_Pedidos" />
           </AssociationSet>
           <FunctionImport Name="eliminarTodo" />
+          <EntitySet Name="Empleados_Servicios" EntityType="RestauranteModel.Empleados_Servicios" />
+          <EntitySet Name="Servicios" EntityType="RestauranteModel.Servicio" />
+          <EntitySet Name="sysdiagrams" EntityType="RestauranteModel.sysdiagram" />
+          <AssociationSet Name="FK_Empleados_Servicios" Association="RestauranteModel.FK_Empleados_Servicios">
+            <End Role="Empleado" EntitySet="Empleadoes" />
+            <End Role="Empleados_Servicios" EntitySet="Empleados_Servicios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Servicios_Servicios" Association="RestauranteModel.FK_Servicios_Servicios">
+            <End Role="Servicio" EntitySet="Servicios" />
+            <End Role="Empleados_Servicios" EntitySet="Empleados_Servicios" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="PP">
           <Key>
@@ -611,6 +686,61 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Empleados_Servicios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpleado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdServicio" Type="Int32" Nullable="false" />
+          <Property Name="Observacion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Empleado" Relationship="RestauranteModel.FK_Empleados_Servicios" FromRole="Empleados_Servicios" ToRole="Empleado" />
+          <NavigationProperty Name="Servicio" Relationship="RestauranteModel.FK_Servicios_Servicios" FromRole="Empleados_Servicios" ToRole="Servicio" />
+        </EntityType>
+        <EntityType Name="Servicio">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Precio" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Empleados_Servicios" Relationship="RestauranteModel.FK_Servicios_Servicios" FromRole="Servicio" ToRole="Empleados_Servicios" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Empleados_Servicios">
+          <End Type="RestauranteModel.Empleado" Role="Empleado" Multiplicity="1" />
+          <End Type="RestauranteModel.Empleados_Servicios" Role="Empleados_Servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empleado">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Empleados_Servicios">
+              <PropertyRef Name="IdEmpleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Servicios_Servicios">
+          <End Type="RestauranteModel.Servicio" Role="Servicio" Multiplicity="1" />
+          <End Type="RestauranteModel.Empleados_Servicios" Role="Empleados_Servicios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servicio">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Empleados_Servicios">
+              <PropertyRef Name="IdServicio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -729,6 +859,37 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="eliminarTodo" FunctionName="RestauranteModel.Store.eliminarTodo" />
+          <EntitySetMapping Name="Empleados_Servicios">
+            <EntityTypeMapping TypeName="RestauranteModel.Empleados_Servicios">
+              <MappingFragment StoreEntitySet="Empleados_Servicios">
+                <ScalarProperty Name="Observacion" ColumnName="Observacion" />
+                <ScalarProperty Name="IdServicio" ColumnName="IdServicio" />
+                <ScalarProperty Name="IdEmpleado" ColumnName="IdEmpleado" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Servicios">
+            <EntityTypeMapping TypeName="RestauranteModel.Servicio">
+              <MappingFragment StoreEntitySet="Servicio">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="RestauranteModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
