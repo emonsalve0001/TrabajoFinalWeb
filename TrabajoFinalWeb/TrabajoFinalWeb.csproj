@@ -286,10 +286,13 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\bg.jpg" />
+    <Content Include="images\InstAire.jpg" />
+    <Content Include="images\ManteAire.jpg" />
     <Content Include="images\pic01.jpg" />
     <Content Include="images\pic02.jpg" />
     <Content Include="images\pic03.jpg" />
     <Content Include="images\pic04.jpg" />
+    <Content Include="images\RepAire.jpg" />
     <Content Include="images\slide01.jpg" />
     <Content Include="images\slide02.jpg" />
     <Content Include="images\slide03.jpg" />
