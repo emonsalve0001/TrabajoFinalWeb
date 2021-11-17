@@ -35,6 +35,7 @@ namespace TrabajoFinalWeb.Controllers
         {
             var productos_Pedidos = db.Productos_Pedidos.Include(p => p.Pedido).Include(p => p.Producto);
             return View(productos_Pedidos.ToList());
+            //return View(this.Orden());
         }
 
         // GET: Productos_Pedidos/Details/5
@@ -159,7 +160,11 @@ namespace TrabajoFinalWeb.Controllers
             ViewBag.Contador = cont;
             Empleado objUser = (Empleado)Session[SessionName.User];
             ViewBag.Nombre =  objUser.Nombre;
-            return View(new List<PP>());
+            var lista_de_pedidos = from c in db.Productoes select c;
+            ViewBag.Productos = lista_de_productos.ToList();
+            ViewBag.Pedidos = lista_de_pedidos.ToList();
+            //return View(new List<PP>());
+            return View(db.PPS.ToList());
         }
 
         [HttpPost]

@@ -117,7 +117,7 @@ namespace TrabajoFinalWeb.Controllers
             PP pP = db.PPS.Find(id);
             db.PPS.Remove(pP);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("../Productos_Pedidos/Orden");
         }
 
         protected override void Dispose(bool disposing)

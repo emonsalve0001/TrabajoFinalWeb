@@ -1,13 +1,13 @@
 ﻿@model TrabajoFinalWeb.Models.DetalleBoleta
 
 <body class="subpage">
-    <h2>Detalle de la Boleta</h2>
+    <h2>Detalle de compra</h2>
     @using (Html.BeginForm("RegistrarPedido", "DetalleBoletas", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            <h4>Metodo de Pago </h4>
+            <h4>Modo de Pago </h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -28,7 +28,7 @@
     }
 
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Regresar", "../Productos_Pedidos/Orden")
     </div>
 </body>
     @section Scripts {
