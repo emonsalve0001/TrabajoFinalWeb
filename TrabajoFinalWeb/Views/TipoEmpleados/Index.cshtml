@@ -5,10 +5,11 @@
     Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
 }
 <body class="subpage">
-    <h2>Tipos de Empleado</h2>
+    <hr />
+    <h2>Tipos De Usuarios</h2>
 
     <p>
-        @Html.ActionLink("Agregar nuevo empleado", "Create")
+        @Html.ActionLink("Agregar nuevo usuario", "Create")
     </p>
     <table class="table">
         <tr>
@@ -31,9 +32,9 @@
                     @Html.DisplayFor(modelItem => item.Sueldo)
                 </td>
                 <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.ID }) |
-                    @Html.ActionLink("Ver a detalle", "Details", new { id = item.ID }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.ID })
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Detalle", "Details", new { id = item.ID }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }

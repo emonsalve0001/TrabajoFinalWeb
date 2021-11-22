@@ -4,11 +4,11 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
 }
-
-<h2>Details</h2>
+<hr />
+<h2>Detalle</h2>
 
 <div>
-    <h4>TipoEmpleado</h4>
+    <h4>Tipo De Usuario</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -30,6 +30,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.ID })*@
+    @Html.ActionLink("Regresar", "Index")
 </p>
