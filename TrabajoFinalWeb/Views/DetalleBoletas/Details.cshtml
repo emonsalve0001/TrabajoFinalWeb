@@ -1,17 +1,16 @@
 ﻿@model TrabajoFinalWeb.Models.DetalleBoleta
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalle";
 }
-
-<h2>Details</h2>
-
+<hr />
 <div>
-    <h4>DetalleBoleta</h4>
+    <h4>Detalle De Compra</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.MontoTotal)
+            @*@Html.DisplayNameFor(model => model.MontoTotal)*@
+            <b>Precio</b>
         </dt>
 
         <dd>
@@ -19,7 +18,8 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ModoDePago.Descripcion)
+            @*@Html.DisplayNameFor(model => model.ModoDePago.Descripcion)*@
+            <b>Modo De Pago</b>
         </dt>
 
         <dd>
@@ -27,16 +27,39 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Pedido.Detalle)
+            @*@Html.DisplayNameFor(model => model.Pedido.Detalle)*@
+            <b>Cliente</b>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Pedido.Detalle)
         </dd>
 
+        <dt>
+            @*@Html.DisplayNameFor(model => model.Pedido.Detalle)*@
+            <b>Estado</b>
+        </dt>
+
+        <dd>
+            <h1>@ViewBag.Atendido</h1>
+            @Html.EditorFor(model => model.Pedido.Atendido, new { @Value = @ViewBag.Atendido })
+        </dd>
+
+        @*@if (Model.Pedido.Atendido == false)
+        {
+            <dd>
+                <h1>No Atendido</h1>
+            </dd>
+        }
+        else
+        {
+            <dd>
+                <h1>Atendido</h1>
+            </dd>
+        }*@
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) | 
+    @Html.ActionLink("Regresar", "Index")
+</div>

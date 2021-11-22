@@ -94,6 +94,19 @@ namespace TrabajoFinalWeb.Controllers
             return View(pedido);
         }
 
+        public bool EditStatus (int id, bool status)
+        {
+            if (ModelState.IsValid)
+            {
+                var data = db.Pedidoes.SingleOrDefault(x => x.ID == id);
+                data.Atendido = status;
+                db.Entry(data).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
         // GET: Pedidos/Delete/5
         public ActionResult Delete(int? id)
         {

@@ -63,6 +63,14 @@ namespace TrabajoFinalWeb.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             DetalleBoleta detalleBoleta = db.DetalleBoletas.Find(id);
+            if (detalleBoleta.Pedido.Atendido)
+            {
+                ViewBag.Atendido = "Atendido";
+            } else
+            {
+                ViewBag.Atendido = "No Atendido";
+            }
+            
             if (detalleBoleta == null)
             {
                 return HttpNotFound();
@@ -94,6 +102,7 @@ namespace TrabajoFinalWeb.Controllers
 
             ViewBag.IdModoDePago = new SelectList(db.ModoDePagoes, "ID", "Descripcion", detalleBoleta.IdModoDePago);
             ViewBag.IdPedido = new SelectList(db.Pedidoes, "ID", "Detalle", detalleBoleta.IdPedido);
+            //ViewBag.Atendido = new SelectList(db.Pedidoes, "ID", "Atendido", detalleBoleta.Pedido.Atendido);
             return View(detalleBoleta);
         }
 
@@ -109,8 +118,23 @@ namespace TrabajoFinalWeb.Controllers
             {
                 return HttpNotFound();
             }
+            List<SelectListItem> lst = new List<SelectListItem>();
+
             ViewBag.IdModoDePago = new SelectList(db.ModoDePagoes, "ID", "Descripcion", detalleBoleta.IdModoDePago);
             ViewBag.IdPedido = new SelectList(db.Pedidoes, "ID", "Detalle", detalleBoleta.IdPedido);
+            //ViewBag.Atendido = new SelectList(db.Pedidoes, "ID", "Atendido", detalleBoleta.Pedido.Atendido);
+            if (detalleBoleta.Pedido.Atendido == true)
+            {
+                lst.Add(new SelectListItem() { Text = "Atendido", Value = detalleBoleta.Pedido.Atendido.ToString() });
+                lst.Add(new SelectListItem() { Text = "No Atendido", Value = false.ToString() });
+            }
+            else
+            {
+                lst.Add(new SelectListItem() { Text = "No Atendido", Value = detalleBoleta.Pedido.Atendido.ToString() });
+                lst.Add(new SelectListItem() { Text = "Atendido", Value = true.ToString() });
+            }
+            
+            ViewBag.Atendido = lst;
             return View(detalleBoleta);
         }
 
@@ -119,16 +143,23 @@ namespace TrabajoFinalWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,IdPedido,MontoTotal,IdModoDePago")] DetalleBoleta detalleBoleta)
+        public ActionResult Edit([Bind(Include = "ID,IdPedido,MontoTotal,IdModoDePago")] DetalleBoleta detalleBoleta, bool Atendido)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(detalleBoleta).State = EntityState.Modified;
                 db.SaveChanges();
+                PedidosController pedidosController = new PedidosController();
+
+                var id = db.Pedidoes.Find(detalleBoleta.IdPedido);
+                pedidosController.EditStatus(id.ID, Atendido);
+
                 return RedirectToAction("Index");
             }
             ViewBag.IdModoDePago = new SelectList(db.ModoDePagoes, "ID", "Descripcion", detalleBoleta.IdModoDePago);
             ViewBag.IdPedido = new SelectList(db.Pedidoes, "ID", "Detalle", detalleBoleta.IdPedido);
+            ////ViewBag.Atendido = new SelectList(db.Pedidoes, "ID", "Atendido", detalleBoleta.Pedido.Atendido);
+            //ViewBag.Atendido = new SelectList("ID", "Atendido");
             return View(detalleBoleta);
         }
 

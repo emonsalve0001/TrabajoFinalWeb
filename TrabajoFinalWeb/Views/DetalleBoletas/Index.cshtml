@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<TrabajoFinalWeb.Models.DetalleBoleta>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pedidos";
     Layout = "~/Views/Shared/_Layout_Administrador.cshtml";
 }
 <body class="subpage">
 
-    <h2>Todas las Boletas</h2>
+    <h2>Lista De Pedidos</h2>
     <table class="table">
         <tr>
             <th>
@@ -14,6 +14,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ModoDePago.Descripcion)
+            </th>
+            <th>
+                Estado
             </th>
             <th>
                 Nombre del Cliente
@@ -31,13 +34,23 @@
                     @Html.DisplayFor(modelItem => item.ModoDePago.Descripcion)
                 </td>
                 <td>
+                    @*@Html.DisplayFor(modelItem => item.Pedido.Atendido)*@
+                    @if (item.Pedido.Atendido == false)
+                    {
+                        <h1>No Atendido</h1>
+                    } 
+                    else
+                    {
+                        <h1>Atendido</h1>
+                    }                    
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Pedido.Detalle)
                 </td>
                 <td>
-                    @Html.ActionLink("Ver Detalle", "Details", new { id = item.ID }) 
+                    @Html.ActionLink("Detalle", "Details", new { id = item.ID })
                 </td>
             </tr>
         }
-
     </table>
 </body>

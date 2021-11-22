@@ -63,9 +63,9 @@
                     @Html.ActionLink("Details", "Details", new { id = item.ID }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
 
-                    @Html.ActionLink("Editar", "Edit", null, new { @class = "btn btn-success" })
-                    @Html.ActionLink("Detalle", "Details", null, new { @class = "btn btn-info" })
-                    @Html.ActionLink("Eliminar", "Delete", null, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ID }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Detalle", "Details", new { id = item.ID }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }
